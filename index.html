@@ -252,46 +252,7 @@ nav {
   padding: 3px 10px; border-radius: 20px;
 }
 
-/* ── BUNDLE ── */
-.bundle {
-  padding: 0 40px 100px;
-  max-width: 1100px; margin: 0 auto;
-  position: relative; z-index: 1;
-}
-.bundle-card {
-  background: var(--text);
-  border-radius: 20px;
-  padding: 56px 64px;
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 40px; flex-wrap: wrap;
-}
-.bundle-left { flex: 1; min-width: 280px; }
-.bundle-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #888; margin-bottom: 12px; }
-.bundle-title {
-  font-family: 'Instrument Serif', serif;
-  font-size: clamp(28px, 4vw, 42px); color: var(--bg);
-  line-height: 1.1; letter-spacing: -0.5px; margin-bottom: 12px;
-}
-.bundle-sub { font-size: 15px; color: #555; line-height: 1.6; font-weight: 300; }
-.bundle-right { text-align: right; flex-shrink: 0; }
-.bundle-price-old { font-size: 16px; color: #aaa; text-decoration: line-through; margin-bottom: 4px; }
-.bundle-price {
-  font-family: 'Instrument Serif', serif;
-  font-size: 52px; color: var(--bg); line-height: 1; margin-bottom: 4px;
-}
-.bundle-price-note { font-size: 12px; color: #888; margin-bottom: 20px; }
-.bundle-items { display: flex; flex-direction: column; gap: 4px; margin-bottom: 24px; }
-.bundle-item { font-size: 13px; color: #555; }
-.bundle-item::before { content: '✓ '; color: #333; font-weight: 700; }
-.bundle-btn {
-  display: inline-block; background: var(--bg); color: var(--text);
-  padding: 14px 28px; border-radius: 10px;
-  font-size: 14px; font-weight: 700; text-decoration: none;
-  transition: opacity 0.2s; font-family: 'Geist', sans-serif;
-}
-.bundle-btn:hover { opacity: 0.8; }
-
-/* ── WHY ── */
+/* ── WHY ── */ */
 .why {
   padding: 100px 40px;
   max-width: 900px; margin: 0 auto;
@@ -331,7 +292,6 @@ footer {
   <a class="nav-logo" href="#">Quant<span>bro</span></a>
   <div class="nav-links">
     <a href="#products">Tools</a>
-    <a href="#bundle">Bundle</a>
     <a href="#why">Why Offline</a>
   </div>
   <a class="nav-cta" href="#products">Browse Tools</a>
@@ -351,7 +311,7 @@ footer {
   </div>
   <div class="hero-cta">
     <a href="#products" class="btn-primary">See All Tools</a>
-    <a href="#bundle" class="btn-secondary">Get the Bundle — $32</a>
+    <a href="#why" class="btn-secondary">Why Offline?</a>
   </div>
   <div class="scroll-hint">
     <div class="scroll-line"></div>
@@ -451,29 +411,6 @@ footer {
       <a class="product-btn" href="https://store.quantbro.com/l/resume" target="_blank">Get ResumeCraft — $7 →</a>
     </div>
 
-  </div>
-</section>
-
-<!-- BUNDLE -->
-<section class="bundle" id="bundle">
-  <div class="bundle-card">
-    <div class="bundle-left">
-      <div class="bundle-eyebrow">Best Value</div>
-      <div class="bundle-title">The Complete<br>Freelancer Toolkit</div>
-      <div class="bundle-sub">All four tools. One payment. Cover your entire freelance workflow from first pitch to final invoice.</div>
-    </div>
-    <div class="bundle-right">
-      <div class="bundle-price-old">$32 separately</div>
-      <div class="bundle-price">$32</div>
-      <div class="bundle-price-note">one-time · all four tools</div>
-      <div class="bundle-items">
-        <div class="bundle-item">ProposalCraft — $9</div>
-        <div class="bundle-item">ContractCraft — $9</div>
-        <div class="bundle-item">InvoiceCraft — $7</div>
-        <div class="bundle-item">ResumeCraft — $7</div>
-      </div>
-      <a class="bundle-btn" href="https://store.quantbro.com" target="_blank">Get All Four Tools →</a>
-    </div>
   </div>
 </section>
 
