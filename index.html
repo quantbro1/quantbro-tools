@@ -235,14 +235,17 @@ nav {
 }
 .feature::before { content: '→'; color: var(--text3); font-size: 12px; flex-shrink: 0; }
 
+.product-btns { display: flex; gap: 8px; }
 .product-btn {
-  display: block; text-align: center;
+  display: block; text-align: center; flex: 1;
   background: var(--bg); border: 1px solid var(--border);
-  color: var(--text); padding: 13px 20px; border-radius: 10px;
+  color: var(--text); padding: 13px 16px; border-radius: 10px;
   font-size: 13px; font-weight: 600; text-decoration: none;
   transition: all 0.2s; font-family: 'Geist', sans-serif;
 }
 .product-btn:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
+.product-btn.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+.product-btn.primary:hover { opacity: 0.85; }
 
 .product-card.featured { background: var(--surface2); }
 .featured-badge {
@@ -350,7 +353,10 @@ footer {
         <div class="feature">Multi-currency support</div>
         <div class="feature">One-click PDF download</div>
       </div>
-      <a class="product-btn" href="https://store.quantbro.com/l/proposal" target="_blank">Get ProposalCraft — $9 →</a>
+      <div class="product-btns">
+        <a class="product-btn" href="https://proposal.quantbro.com">Learn More</a>
+        <a class="product-btn primary" href="https://store.quantbro.com/l/proposal" target="_blank">Get It — $9</a>
+      </div>
     </div>
 
     <!-- CONTRACT -->
@@ -370,7 +376,10 @@ footer {
         <div class="feature">Multi-currency support</div>
         <div class="feature">One-click PDF download</div>
       </div>
-      <a class="product-btn" href="https://store.quantbro.com/l/contract" target="_blank">Get ContractCraft — $9 →</a>
+      <div class="product-btns">
+        <a class="product-btn" href="https://contract.quantbro.com">Learn More</a>
+        <a class="product-btn primary" href="https://store.quantbro.com/l/contract" target="_blank">Get It — $9</a>
+      </div>
     </div>
 
     <!-- INVOICE -->
@@ -389,7 +398,10 @@ footer {
         <div class="feature">Clean professional PDF output</div>
         <div class="feature">No account, no subscription, ever</div>
       </div>
-      <a class="product-btn" href="https://store.quantbro.com/l/invoice" target="_blank">Get InvoiceCraft — $7 →</a>
+      <div class="product-btns">
+        <a class="product-btn" href="https://invoice.quantbro.com">Learn More</a>
+        <a class="product-btn primary" href="https://store.quantbro.com/l/invoice" target="_blank">Get It — $7</a>
+      </div>
     </div>
 
     <!-- RESUME -->
@@ -408,7 +420,10 @@ footer {
         <div class="feature">One-click PDF — no paywall ever</div>
         <div class="feature">100% offline and private</div>
       </div>
-      <a class="product-btn" href="https://store.quantbro.com/l/resume" target="_blank">Get ResumeCraft — $7 →</a>
+      <div class="product-btns">
+        <a class="product-btn" href="https://resume.quantbro.com">Learn More</a>
+        <a class="product-btn primary" href="https://store.quantbro.com/l/resume" target="_blank">Get It — $7</a>
+      </div>
     </div>
 
   </div>
