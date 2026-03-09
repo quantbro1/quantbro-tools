@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantbro Tools — Professional Tools for Freelancers</title>
+<meta name="description" content="Four offline tools for freelancers. Invoice generator, resume builder, contract generator, proposal builder. One-time payment, no subscription, works forever.">
+<link rel="icon" type="image/png" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --bg: #080808;
+  --surface: #111111;
+  --surface2: #181818;
+  --border: #222222;
+  --text: #f2f0ec;
+  --text2: #888884;
+  --text3: #444440;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Geist', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── NOISE TEXTURE ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 20px 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(8,8,8,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: 'Instrument Serif', serif;
+  font-size: 22px; color: var(--text);
+  text-decoration: none; letter-spacing: -0.3px;
+}
+.nav-logo span { color: var(--text2); font-style: italic; }
+.nav-links { display: flex; gap: 32px; }
+.nav-links a {
+  font-size: 13px; color: var(--text2); text-decoration: none;
+  font-weight: 500; letter-spacing: 0.3px;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-cta {
+  background: var(--text); color: var(--bg);
+  padding: 9px 20px; border-radius: 8px;
+  font-size: 13px; font-weight: 600; text-decoration: none;
+  transition: opacity 0.2s;
+}
+.nav-cta:hover { opacity: 0.85; }
+@media(max-width:640px){ .nav-links { display:none; } }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 120px 40px 80px;
+  text-align: center;
+  position: relative; z-index: 1;
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; padding: 6px 16px;
+  font-size: 12px; font-weight: 500; color: var(--text2);
+  margin-bottom: 32px; letter-spacing: 0.5px;
+  animation: fadeUp 0.6s ease both;
+}
+.hero-badge::before { content: '✦'; color: #c9a84c; }
+
+.hero-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(48px, 8vw, 96px);
+  line-height: 1.0; letter-spacing: -2px;
+  margin-bottom: 24px;
+  animation: fadeUp 0.6s 0.1s ease both;
+}
+.hero-title em { font-style: italic; color: var(--text2); }
+
+.hero-sub {
+  font-size: clamp(15px, 2vw, 18px);
+  color: var(--text2); font-weight: 300;
+  max-width: 480px; line-height: 1.7;
+  margin-bottom: 48px;
+  animation: fadeUp 0.6s 0.2s ease both;
+}
+
+.hero-pills {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  justify-content: center; margin-bottom: 56px;
+  animation: fadeUp 0.6s 0.3s ease both;
+}
+.pill {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; padding: 6px 14px;
+  font-size: 12px; color: var(--text2); font-weight: 500;
+}
+
+.hero-cta {
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+  animation: fadeUp 0.6s 0.35s ease both;
+}
+.btn-primary {
+  background: var(--text); color: var(--bg);
+  padding: 14px 28px; border-radius: 10px;
+  font-size: 14px; font-weight: 700; text-decoration: none;
+  transition: opacity 0.2s, transform 0.2s;
+  display: inline-block;
+}
+.btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+.btn-secondary {
+  background: transparent; border: 1px solid var(--border);
+  color: var(--text2); padding: 14px 28px; border-radius: 10px;
+  font-size: 14px; font-weight: 600; text-decoration: none;
+  transition: all 0.2s; display: inline-block;
+}
+.btn-secondary:hover { border-color: #666; color: var(--text); }
+
+/* scroll indicator */
+.scroll-hint {
+  position: absolute; bottom: 40px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: var(--text3); font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+  animation: fadeUp 0.6s 0.5s ease both;
+}
+.scroll-line {
+  width: 1px; height: 40px; background: linear-gradient(to bottom, var(--text3), transparent);
+  animation: scrollLine 2s ease-in-out infinite;
+}
+@keyframes scrollLine {
+  0%,100% { transform: scaleY(1); opacity: 1; }
+  50% { transform: scaleY(0.5); opacity: 0.3; }
+}
+
+/* ── STATS BAR ── */
+.stats {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 32px 40px;
+  display: flex; justify-content: center; gap: 64px;
+  flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+.stat { text-align: center; }
+.stat-num {
+  font-family: 'Instrument Serif', serif;
+  font-size: 32px; color: var(--text); margin-bottom: 4px;
+}
+.stat-label { font-size: 12px; color: var(--text2); font-weight: 500; letter-spacing: 0.5px; }
+
+/* ── PRODUCTS ── */
+.products {
+  padding: 100px 40px;
+  max-width: 1100px; margin: 0 auto;
+  position: relative; z-index: 1;
+}
+
+.section-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--text3); margin-bottom: 16px; text-align: center;
+}
+.section-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(32px, 5vw, 52px); text-align: center;
+  margin-bottom: 64px; letter-spacing: -1px; line-height: 1.1;
+}
+.section-title em { font-style: italic; color: var(--text2); }
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+}
+@media(max-width:540px){ .products-grid { grid-template-columns:1fr; } }
+
+.product-card {
+  background: var(--surface);
+  padding: 40px 44px;
+  position: relative;
+  transition: background 0.2s;
+  display: flex; flex-direction: column;
+}
+.product-card:hover { background: var(--surface2); }
+
+.product-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+.product-icon {
+  width: 48px; height: 48px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.product-price {
+  font-family: 'Instrument Serif', serif;
+  font-size: 28px; color: var(--text);
+}
+.product-price span { font-size: 14px; color: var(--text2); font-family: 'Geist', sans-serif; font-weight: 400; }
+
+.product-name {
+  font-family: 'Instrument Serif', serif;
+  font-size: 26px; margin-bottom: 8px; letter-spacing: -0.3px;
+}
+.product-tagline { font-size: 14px; color: var(--text2); line-height: 1.6; margin-bottom: 24px; font-weight: 300; }
+
+.product-features {
+  display: flex; flex-direction: column; gap: 8px;
+  margin-bottom: 32px; flex: 1;
+}
+.feature {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; color: var(--text2);
+}
+.feature::before { content: '→'; color: var(--text3); font-size: 12px; flex-shrink: 0; }
+
+.product-btn {
+  display: block; text-align: center;
+  background: var(--bg); border: 1px solid var(--border);
+  color: var(--text); padding: 13px 20px; border-radius: 10px;
+  font-size: 13px; font-weight: 600; text-decoration: none;
+  transition: all 0.2s; font-family: 'Geist', sans-serif;
+}
+.product-btn:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+.product-card.featured { background: var(--surface2); }
+.featured-badge {
+  position: absolute; top: 20px; right: 44px;
+  background: #c9a84c; color: #080808;
+  font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 20px;
+}
+
+/* ── BUNDLE ── */
+.bundle {
+  padding: 0 40px 100px;
+  max-width: 1100px; margin: 0 auto;
+  position: relative; z-index: 1;
+}
+.bundle-card {
+  background: var(--text);
+  border-radius: 20px;
+  padding: 56px 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 40px; flex-wrap: wrap;
+}
+.bundle-left { flex: 1; min-width: 280px; }
+.bundle-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #888; margin-bottom: 12px; }
+.bundle-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(28px, 4vw, 42px); color: var(--bg);
+  line-height: 1.1; letter-spacing: -0.5px; margin-bottom: 12px;
+}
+.bundle-sub { font-size: 15px; color: #555; line-height: 1.6; font-weight: 300; }
+.bundle-right { text-align: right; flex-shrink: 0; }
+.bundle-price-old { font-size: 16px; color: #aaa; text-decoration: line-through; margin-bottom: 4px; }
+.bundle-price {
+  font-family: 'Instrument Serif', serif;
+  font-size: 52px; color: var(--bg); line-height: 1; margin-bottom: 4px;
+}
+.bundle-price-note { font-size: 12px; color: #888; margin-bottom: 20px; }
+.bundle-items { display: flex; flex-direction: column; gap: 4px; margin-bottom: 24px; }
+.bundle-item { font-size: 13px; color: #555; }
+.bundle-item::before { content: '✓ '; color: #333; font-weight: 700; }
+.bundle-btn {
+  display: inline-block; background: var(--bg); color: var(--text);
+  padding: 14px 28px; border-radius: 10px;
+  font-size: 14px; font-weight: 700; text-decoration: none;
+  transition: opacity 0.2s; font-family: 'Geist', sans-serif;
+}
+.bundle-btn:hover { opacity: 0.8; }
+
+/* ── WHY ── */
+.why {
+  padding: 100px 40px;
+  max-width: 900px; margin: 0 auto;
+  position: relative; z-index: 1;
+  text-align: center;
+}
+.why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; margin-top: 56px; }
+.why-item { text-align: left; }
+.why-icon { font-size: 28px; margin-bottom: 14px; }
+.why-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+.why-text { font-size: 13px; color: var(--text2); line-height: 1.7; font-weight: 300; }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px;
+  position: relative; z-index: 1;
+}
+.footer-logo { font-family: 'Instrument Serif', serif; font-size: 18px; color: var(--text2); }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { font-size: 12px; color: var(--text3); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text2); }
+.footer-copy { font-size: 12px; color: var(--text3); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Quant<span>bro</span></a>
+  <div class="nav-links">
+    <a href="#products">Tools</a>
+    <a href="#bundle">Bundle</a>
+    <a href="#why">Why Offline</a>
+  </div>
+  <a class="nav-cta" href="#products">Browse Tools</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Professional Tools for Freelancers</div>
+  <h1 class="hero-title">Tools that work.<br><em>Forever.</em></h1>
+  <p class="hero-sub">Four offline tools covering your entire freelance workflow — from first proposal to final invoice. One-time payment, no subscription, no account required.</p>
+  <div class="hero-pills">
+    <div class="pill">100% Offline</div>
+    <div class="pill">No Subscription</div>
+    <div class="pill">No Account Required</div>
+    <div class="pill">Instant PDF Export</div>
+    <div class="pill">Mac · Windows · Linux</div>
+  </div>
+  <div class="hero-cta">
+    <a href="#products" class="btn-primary">See All Tools</a>
+    <a href="#bundle" class="btn-secondary">Get the Bundle — $32</a>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="stat-num">4</div><div class="stat-label">Professional Tools</div></div>
+  <div class="stat"><div class="stat-num">$0</div><div class="stat-label">Monthly Fee</div></div>
+  <div class="stat"><div class="stat-num">∞</div><div class="stat-label">Uses Forever</div></div>
+  <div class="stat"><div class="stat-num">0</div><div class="stat-label">Accounts Required</div></div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="section-label">The Toolkit</div>
+  <h2 class="section-title">Everything you need,<br><em>nothing you don't.</em></h2>
+
+  <div class="products-grid">
+
+    <!-- PROPOSAL -->
+    <div class="product-card">
+      <div class="product-top">
+        <div class="product-icon" style="background:#1a0a00">📋</div>
+        <div class="product-price">$9 <span>one-time</span></div>
+      </div>
+      <div class="product-name">ProposalCraft</div>
+      <div class="product-tagline">Win more clients with proposals that look like they came from a top agency — not a Google Doc.</div>
+      <div class="product-features">
+        <div class="feature">3 professional themes — Bold, Clean, Elegant</div>
+        <div class="feature">Dynamic deliverables and timeline builder</div>
+        <div class="feature">Auto-calculated deposit amounts</div>
+        <div class="feature">Approval signature blocks</div>
+        <div class="feature">Multi-currency support</div>
+        <div class="feature">One-click PDF download</div>
+      </div>
+      <a class="product-btn" href="https://store.quantbro.com/l/proposal" target="_blank">Get ProposalCraft — $9 →</a>
+    </div>
+
+    <!-- CONTRACT -->
+    <div class="product-card featured">
+      <div class="featured-badge">Most Popular</div>
+      <div class="product-top">
+        <div class="product-icon" style="background:#0a0a1a">⚖️</div>
+        <div class="product-price">$9 <span>one-time</span></div>
+      </div>
+      <div class="product-name">ContractCraft</div>
+      <div class="product-tagline">Protect every project with a professional contract before work begins. Toggle the clauses you need.</div>
+      <div class="product-features">
+        <div class="feature">4 contract types — Freelance, Design, Dev, Consulting</div>
+        <div class="feature">Toggle clauses on/off — NDA, IP, late fees & more</div>
+        <div class="feature">Auto-calculated deposit and balance</div>
+        <div class="feature">Professional signature blocks</div>
+        <div class="feature">Multi-currency support</div>
+        <div class="feature">One-click PDF download</div>
+      </div>
+      <a class="product-btn" href="https://store.quantbro.com/l/contract" target="_blank">Get ContractCraft — $9 →</a>
+    </div>
+
+    <!-- INVOICE -->
+    <div class="product-card">
+      <div class="product-top">
+        <div class="product-icon" style="background:#001a0a">🧾</div>
+        <div class="product-price">$7 <span>one-time</span></div>
+      </div>
+      <div class="product-name">InvoiceCraft</div>
+      <div class="product-tagline">Send professional invoices in under 2 minutes. Your financial data never leaves your computer.</div>
+      <div class="product-features">
+        <div class="feature">Custom logo and brand color</div>
+        <div class="feature">Tax % and discount % calculations</div>
+        <div class="feature">Multi-currency support</div>
+        <div class="feature">Live preview as you type</div>
+        <div class="feature">Clean professional PDF output</div>
+        <div class="feature">No account, no subscription, ever</div>
+      </div>
+      <a class="product-btn" href="https://store.quantbro.com/l/invoice" target="_blank">Get InvoiceCraft — $7 →</a>
+    </div>
+
+    <!-- RESUME -->
+    <div class="product-card">
+      <div class="product-top">
+        <div class="product-icon" style="background:#000a1a">📄</div>
+        <div class="product-price">$7 <span>one-time</span></div>
+      </div>
+      <div class="product-name">ResumeCraft</div>
+      <div class="product-tagline">Build a professional resume without hitting a paywall when you try to download your own PDF.</div>
+      <div class="product-features">
+        <div class="feature">3 templates — Classic, Modern, Minimal</div>
+        <div class="feature">6 accent color options</div>
+        <div class="feature">Dynamic experience and skills builder</div>
+        <div class="feature">Live preview as you type</div>
+        <div class="feature">One-click PDF — no paywall ever</div>
+        <div class="feature">100% offline and private</div>
+      </div>
+      <a class="product-btn" href="https://store.quantbro.com/l/resume" target="_blank">Get ResumeCraft — $7 →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- BUNDLE -->
+<section class="bundle" id="bundle">
+  <div class="bundle-card">
+    <div class="bundle-left">
+      <div class="bundle-eyebrow">Best Value</div>
+      <div class="bundle-title">The Complete<br>Freelancer Toolkit</div>
+      <div class="bundle-sub">All four tools. One payment. Cover your entire freelance workflow from first pitch to final invoice.</div>
+    </div>
+    <div class="bundle-right">
+      <div class="bundle-price-old">$32 separately</div>
+      <div class="bundle-price">$32</div>
+      <div class="bundle-price-note">one-time · all four tools</div>
+      <div class="bundle-items">
+        <div class="bundle-item">ProposalCraft — $9</div>
+        <div class="bundle-item">ContractCraft — $9</div>
+        <div class="bundle-item">InvoiceCraft — $7</div>
+        <div class="bundle-item">ResumeCraft — $7</div>
+      </div>
+      <a class="bundle-btn" href="https://store.quantbro.com" target="_blank">Get All Four Tools →</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY OFFLINE -->
+<section class="why" id="why">
+  <div class="section-label">Why Offline</div>
+  <h2 class="section-title">No cloud.<br><em>No compromise.</em></h2>
+  <div class="why-grid">
+    <div class="why-item">
+      <div class="why-icon">🔒</div>
+      <div class="why-title">Your data stays yours</div>
+      <div class="why-text">Nothing is stored on our servers because there are no servers. Your client names, rates, and contracts never leave your device.</div>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">⚡</div>
+      <div class="why-title">Works anywhere</div>
+      <div class="why-text">No internet required after download. Works on a plane, in a café, wherever you need to get work done.</div>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">♾️</div>
+      <div class="why-title">Yours forever</div>
+      <div class="why-text">Pay once, use forever. No subscription that doubles in price. No features locked behind a higher tier. Just the tool.</div>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">🖥️</div>
+      <div class="why-title">Works everywhere</div>
+      <div class="why-text">Opens in any modern browser. Mac, Windows, Linux. Chrome, Safari, Firefox. No installation required.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Quantbro</div>
+  <div class="footer-links">
+    <a href="https://store.quantbro.com/l/proposal" target="_blank">ProposalCraft</a>
+    <a href="https://store.quantbro.com/l/contract" target="_blank">ContractCraft</a>
+    <a href="https://store.quantbro.com/l/invoice" target="_blank">InvoiceCraft</a>
+    <a href="https://store.quantbro.com/l/resume" target="_blank">ResumeCraft</a>
+  </div>
+  <div class="footer-copy">© 2025 Quantbro · All rights reserved</div>
+</footer>
+
+</body>
+</html>
